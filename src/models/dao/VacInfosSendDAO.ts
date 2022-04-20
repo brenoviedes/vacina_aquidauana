@@ -92,23 +92,25 @@ export const getVacsSendStatistic =(): VacTypesSend[] => {
 
     vacsSend.forEach(item => {
 
-        if(vacsSendResume[`${item.year}/${item.monthName}`]) {
-            vacsSendResume[`${item.year}/${item.monthName}`] += 1
+        const leftSide = `${item.year}/${item.monthName}`
+
+        if(vacsSendResume[leftSide]) {
+            const objInside = vacsSendResume[leftSide]
+            if(objInside[item.vacType]) {
+                objInside[item.vacType] += item.amount
+            }  else {
+                objInside[item.vacType] = item.amount
+            }   
 
         } else {
-            vacsSendResume[`${item.year}/${item.monthName}`] = 1
+            vacsSendResume[leftSide] = {
+                [item.vacType]: item.amount
+            }
         }
     })
 
     console.log(vacsSend)
     console.log(vacsSendResume)
-
-    // const obj = {
-//     'janeiro/2021': {
-//         jenssen: 23432,
-//         oxford: 23423,
-//         pfizer: 23423
-//     }
 
     return vacsSend
 }
