@@ -1,27 +1,25 @@
 
 import { parse } from "csv-parse/sync"
 import { readFileSync } from "fs"
-import { join} from "path"
+import { join } from "path"
 import VacTypesSend from "../types/VacTypesSend"
 
 
 export const parseVacsSendCSVFile = () => {
-    const filePath = join(__dirname, '..', '..', 'data', 'dosesEnviadas.csv' )
+    const filePath = join(__dirname, '..', '..', 'data', 'dosesEnviadas.csv')
     const strContent = readFileSync(filePath, 'utf-8')
     let parsedContent: any[] = parse(strContent)
     parsedContent = parsedContent.slice(1)
     return parsedContent
 }
 
-
-
 export const getVacsSend = (row: any): VacTypesSend => {
-    let [date, , vacType, amount, , , , ] = row
+    let [date, , vacType, amount, , , ,] = row
 
     let slicedDate = date.split('/')
-    
+
     const year = parseInt(slicedDate[2])
-    const month =  parseInt(slicedDate[1]) - 1
+    const month = parseInt(slicedDate[1]) - 1
     let monthName = ''
 
     switch (month) {
@@ -30,7 +28,7 @@ export const getVacsSend = (row: any): VacTypesSend => {
             break
         case 1:
             monthName = 'February'
-            break 
+            break
         case 2:
             monthName = 'March'
             break
@@ -51,7 +49,7 @@ export const getVacsSend = (row: any): VacTypesSend => {
             break
         case 8:
             monthName = 'September'
-            break 
+            break
         case 9:
             monthName = 'October'
             break
@@ -62,7 +60,7 @@ export const getVacsSend = (row: any): VacTypesSend => {
             monthName = 'December'
     }
 
-    vacType = vacType 
+    vacType = vacType
     amount = parseInt(amount.replace(/\./g, ''))
 
     const vacsMonth: VacTypesSend = {
@@ -73,44 +71,39 @@ export const getVacsSend = (row: any): VacTypesSend => {
     }
 
     return vacsMonth
-} 
+}
 
-
-
-
-export const getVacsSendStatistic =(): VacTypesSend[] => {
+export const getVacsSendStatistic = (): VacTypesSend | Object => {
     const vacsSendArray = parseVacsSendCSVFile()
-    const vacsSend: VacTypesSend[] = [] 
+    const vacsSend: VacTypesSend[] = []
 
     for (const i of vacsSendArray) {
         let vac = getVacsSend(i)
         vacsSend.push(vac)
     }
-    // console.log(vacsSend)
 
     const vacsSendResume = {}
 
     vacsSend.forEach(item => {
 
-        if(vacsSendResume[`${item.year}/${item.monthName}`]) {
-            vacsSendResume[`${item.year}/${item.monthName}`] += 1
+        const leftSide = `${item.year}/${item.monthName}`
+
+        if (vacsSendResume[leftSide]) {
+            const objInside = vacsSendResume[leftSide]
+            if (objInside[item.vacType]) {
+                objInside[item.vacType] += item.amount
+            } else {
+                objInside[item.vacType] = item.amount
+            }
 
         } else {
-            vacsSendResume[`${item.year}/${item.monthName}`] = 1
+            vacsSendResume[leftSide] = {
+                [item.vacType]: item.amount
+            }
         }
     })
 
-    console.log(vacsSend)
-    console.log(vacsSendResume)
-
-    // const obj = {
-//     'janeiro/2021': {
-//         jenssen: 23432,
-//         oxford: 23423,
-//         pfizer: 23423
-//     }
-
-    return vacsSend
+    return vacsSendResume
 }
 
 

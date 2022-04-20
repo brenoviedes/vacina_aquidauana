@@ -6,7 +6,6 @@ import { getVacsAppliedStatistic } from "../models/dao/VacInfosAppliedDAO";
 import VacTypesApplied from "../models/types/VacsTypeApplied";
 import { colorsPie } from "./colorsUtil";
 
-
 const getAppliedChart = (vacApplied: VacTypesApplied) => {
     const labels: string[] = []
 
@@ -17,8 +16,6 @@ const getAppliedChart = (vacApplied: VacTypesApplied) => {
         labels.push(phrase)
     })
 
-    // console.log(labels)
-
     const data: number[] = []
 
     Object.keys(appliedDoses).forEach(item => {
@@ -26,26 +23,17 @@ const getAppliedChart = (vacApplied: VacTypesApplied) => {
         data.push(doses)
     })
 
-    // console.log(data)
-
     const charInfo = {
         labels,
         datasets: [
             {
-                backgroundColor: [
-                'rgb(66, 66, 111)',
-                'rgb(0, 255, 0)',
-                'rgb(210, 105, 30)',
-                'rgb(255, 0, 255)',
-            ],
+                backgroundColor: colorsPie,
                 data,
             }
         ]
     }
 
     return charInfo
-
-
 }
 
 export const createAppliedChart = (vacApplied: VacTypesApplied) => {
@@ -76,6 +64,5 @@ export const createAppliedChart = (vacApplied: VacTypesApplied) => {
     const fileName = `Grupos_Vacinados.png`
     const path = join(__dirname, '..', 'charts', fileName)
     writeFileSync(path, image)
-
 }
 

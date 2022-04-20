@@ -1,27 +1,32 @@
 import { getVacsAppliedStatistic } from "../models/dao/VacInfosAppliedDAO";
 
-let colorsChart = {}
 
-function getRandomIntInclusive(min: number, max: number) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function gera_cor(){
+    var hexadecimais = '0123456789ABCDEF';
+    var cor = '#';
+  
+    // Pega um número aleatório no array acima
+    for (var i = 0; i < 6; i++ ) {
+    //E concatena à variável cor
+        cor += hexadecimais[Math.floor(Math.random() * 16)];
+    }
+    return cor;
 }
 
 export function arrayColors() {
     const appliedDoses = getVacsAppliedStatistic()
 
     let objlength = Object.keys(appliedDoses).length
-
+    const colors = []
+    
     for (let i = 0; i < objlength; i++) {
 
-        colorsChart[i] = `rbg(${getRandomIntInclusive(0, 255)},${getRandomIntInclusive(0, 255)},${getRandomIntInclusive(0, 255)})`
-
+        const color = gera_cor()
+        colors.push(color)
 
     }
-
-    console.log(colorsChart)
-    return colorsChart
+    
+    return colors
 }
 
 export const colorsPie = arrayColors()
