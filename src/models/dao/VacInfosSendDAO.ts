@@ -2,6 +2,7 @@
 import { parse } from "csv-parse/sync"
 import { readFileSync } from "fs"
 import { join } from "path"
+import VacsSendResumeType from "../types/VacsSendResumeType"
 import VacTypesSend from "../types/VacTypesSend"
 
 
@@ -73,7 +74,7 @@ export const getVacsSend = (row: any): VacTypesSend => {
     return vacsMonth
 }
 
-export const getVacsSendStatistic = (): VacTypesSend | Object => {
+export const getVacsSendStatistic = (): VacsSendResumeType[]  => {
     const vacsSendArray = parseVacsSendCSVFile()
     const vacsSend: VacTypesSend[] = []
 
@@ -82,14 +83,14 @@ export const getVacsSendStatistic = (): VacTypesSend | Object => {
         vacsSend.push(vac)
     }
 
-    const vacsSendResume = []
+    const vacsSendResume: VacsSendResumeType[] = []
     
-    let obj: any = {
+    let obj: VacsSendResumeType = {
         period: '',
-        qtdPfizer: '',
-        qtdOxfordFiocruz: '',
-        qtdJanssen: '',
-        qtdCoronavacButantan: ''
+        qtdPfizer: 0,
+        qtdOxfordFiocruz: 0,
+        qtdJanssen: 0,
+        qtdCoronavacButantan: 0
     }
 
     vacsSend.forEach(item => {
@@ -100,7 +101,7 @@ export const getVacsSendStatistic = (): VacTypesSend | Object => {
 
             obj.qtdPfizer += item.vacType == 'Pfizer' ? item.amount : 0
             obj.qtdOxfordFiocruz += item.vacType == 'Oxford/Fiocruz' ? item.amount : 0
-            obj.qtdJanssen += item.vacType == 'Jenssen' ? item.amount : 0
+            obj.qtdJanssen += item.vacType == 'Janssen' ? item.amount : 0
             obj.qtdCoronavacButantan += item.vacType == 'CoronaVac/Butantan' ? item.amount : 0
         
         } else {
@@ -109,7 +110,7 @@ export const getVacsSendStatistic = (): VacTypesSend | Object => {
                 period: leftSide,
                 qtdPfizer: item.vacType == 'Pfizer' ? item.amount : 0,
                 qtdOxfordFiocruz: item.vacType == 'Oxford/Fiocruz' ? item.amount : 0,
-                qtdJanssen: item.vacType == 'Jenssen' ? item.amount : 0,
+                qtdJanssen: item.vacType == 'Janssen' ? item.amount : 0,
                 qtdCoronavacButantan: item.vacType == 'CoronaVac/Butantan' ? item.amount : 0
             }
 
@@ -118,7 +119,9 @@ export const getVacsSendStatistic = (): VacTypesSend | Object => {
         }
     })
 
-    console.log(vacsSendResume)
+    //console.log(vacsSend)
+    // console.log(vacsSendResume)
+   
 
     return vacsSendResume
 }

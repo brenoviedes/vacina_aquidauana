@@ -4,7 +4,6 @@ import { writeFileSync } from "fs";
 import { join } from "path";
 
 import VacsSendResumeType from "../models/types/VacsSendResumeType";
-import { colorsRandom, colorsRandomRGB, transparentize } from "./colorsUtil";
 
 
 
@@ -32,16 +31,16 @@ export const getSendChart = (VacSended: VacsSendResumeType[]) => {
             {
                 label: 'Pfizer',
                 data: qtdPfizer,
-                borderColer: colorsRandomRGB,
-                backgroundColot: transparentize(colorsRandomRGB, 0.5),
+                borderColer: 'rgb(0,0,255)',
+                backgroundColot: 'rgba(0,0,255,0.5',
                 yAxisID: 'y'
             },
             {
                 label: 'janssen',
                 data: qtdJanssen,
-                borderColer: colorsRandomRGB,
-                backgroundColot: transparentize(colorsRandomRGB, 0.5),
-                yAxisID:  'y'
+                borderColer: 'rgb(0,255,0)',
+                backgroundColot: 'rgba(0,255,0,0.5)',
+                yAxisID: 'y'
             }
         ]
     }
@@ -49,10 +48,9 @@ export const getSendChart = (VacSended: VacsSendResumeType[]) => {
     return data
 }
 
-
 export const CreateSendedChart = (VacSended: VacsSendResumeType[]) => {
 
-    const data: any = getSendChart(VacSended)
+    const data = getSendChart(VacSended)
 
     const chart = new ChartJSNodeCanvas({
         width: 1366,

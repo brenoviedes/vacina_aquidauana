@@ -1,10 +1,12 @@
 import { getVacsAppliedStatistic } from "./models/dao/VacInfosAppliedDAO";
 import { getVacsSendStatistic } from "./models/dao/VacInfosSendDAO";
+import VacsSendResumeType from "./models/types/VacsSendResumeType";
+import VacTypesApplied from "./models/types/VacsTypeApplied";
 import { createAppliedChart } from "./utils/ChartAppliedUtils";
-import { getSendChart } from "./utils/ChartSendUtils";
+import { CreateSendedChart } from "./utils/ChartSendUtils";
 
-getVacsSendStatistic()
-//getSendChart()
+const dosesEnviadas: VacsSendResumeType[] = getVacsSendStatistic()
+CreateSendedChart(dosesEnviadas)
 
-//const dosesAplicadas: any = getVacsAppliedStatistic()
-//createAppliedChart(dosesAplicadas)
+const dosesAplicadas: any = getVacsAppliedStatistic()
+createAppliedChart(dosesAplicadas)

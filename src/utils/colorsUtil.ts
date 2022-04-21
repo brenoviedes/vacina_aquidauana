@@ -1,5 +1,5 @@
 import { getVacsAppliedStatistic } from "../models/dao/VacInfosAppliedDAO";
-
+import colorLib from '@kurkle/color';
 
 function gera_cor(){
     var hexadecimais = '0123456789ABCDEF';
@@ -29,4 +29,20 @@ export function arrayColors() {
     return colors
 }
 
-export const colorsPie = arrayColors()
+export const colorsRandom = arrayColors()
+
+export function gerar_corRGB() {
+    let r = Math.random() * 255;
+    let g = Math.random() * 255;
+    let b = Math.random() * 255;
+ 
+    return `rgba(${r}, ${g}, ${b})`;
+ }
+
+ export const colorsRandomRGB = gerar_corRGB()
+
+
+export function transparentize(value: string, opacity: number) {
+  var alpha = opacity === undefined ? 0.5 : 1 - opacity;
+  return colorLib(value).alpha(alpha).rgbString();
+}
