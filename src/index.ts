@@ -4,7 +4,7 @@ import { createAppliedChart } from "./utils/ChartAppliedUtils";
 import { getSendChart } from "./utils/ChartSendUtils";
 
 getVacsSendStatistic()
-getSendChart()
+//getSendChart()
 
-const dosesAplicadas: any = getVacsAppliedStatistic()
-createAppliedChart(dosesAplicadas)
+//const dosesAplicadas: any = getVacsAppliedStatistic()
+//createAppliedChart(dosesAplicadas)

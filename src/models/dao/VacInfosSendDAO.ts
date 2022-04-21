@@ -82,45 +82,45 @@ export const getVacsSendStatistic = (): VacTypesSend | Object => {
         vacsSend.push(vac)
     }
 
-    const vacsSendResume = {}
+    const vacsSendResume = []
+    
+    let obj: any = {
+        period: '',
+        qtdPfizer: '',
+        qtdOxfordFiocruz: '',
+        qtdJanssen: '',
+        qtdCoronavacButantan: ''
+    }
 
     vacsSend.forEach(item => {
 
         const leftSide = `${item.year}/${item.monthName}`
 
-<<<<<<< HEAD
-        if (vacsSendResume[leftSide]) {
-            const objInside = vacsSendResume[leftSide]
-            if (objInside[item.vacType]) {
-                objInside[item.vacType] += item.amount
-            } else {
-                objInside[item.vacType] = item.amount
-            }
-=======
-        if(vacsSendResume[leftSide]) {
-            const objInside = vacsSendResume[leftSide]
-            if(objInside[item.vacType]) {
-                objInside[item.vacType] += item.amount
-            }  else {
-                objInside[item.vacType] = item.amount
-            }   
->>>>>>> 8c76664f1632f51ec98ed44195e5765e73abcb61
+        if(obj.period == leftSide) {
 
+            obj.qtdPfizer += item.vacType == 'Pfizer' ? item.amount : 0
+            obj.qtdOxfordFiocruz += item.vacType == 'Oxford/Fiocruz' ? item.amount : 0
+            obj.qtdJanssen += item.vacType == 'Jenssen' ? item.amount : 0
+            obj.qtdCoronavacButantan += item.vacType == 'CoronaVac/Butantan' ? item.amount : 0
+        
         } else {
-            vacsSendResume[leftSide] = {
-                [item.vacType]: item.amount
+
+            obj = {
+                period: leftSide,
+                qtdPfizer: item.vacType == 'Pfizer' ? item.amount : 0,
+                qtdOxfordFiocruz: item.vacType == 'Oxford/Fiocruz' ? item.amount : 0,
+                qtdJanssen: item.vacType == 'Jenssen' ? item.amount : 0,
+                qtdCoronavacButantan: item.vacType == 'CoronaVac/Butantan' ? item.amount : 0
             }
+
+            vacsSendResume.push(obj)
+
         }
     })
 
-<<<<<<< HEAD
-    return vacsSendResume
-=======
-    console.log(vacsSend)
     console.log(vacsSendResume)
 
-    return vacsSend
->>>>>>> 8c76664f1632f51ec98ed44195e5765e73abcb61
+    return vacsSendResume
 }
 
 
