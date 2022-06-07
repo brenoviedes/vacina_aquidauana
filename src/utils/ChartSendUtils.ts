@@ -4,7 +4,7 @@ import { writeFileSync } from "fs";
 import { join } from "path";
 
 import VacsSendResumeType from "../models/types/VacsSendResumeType";
-import { colorsRandom, colorsRandomRGB, transparentize } from "./colorsUtil";
+import { colorsRandomRGB, transparentize } from "./colorsUtil";
 
 
 
@@ -24,7 +24,25 @@ export const getSendChart = (VacSended: VacsSendResumeType[]) => {
         qtdCoronavacButantan.push(item.qtdCoronavacButantan)
     })
 
-    // console.log(labels, qtdPfizer, qtdOxfordFiocruz, qtdJanssen, qtdCoronavacButantan)
+    console.log(labels, qtdPfizer, qtdOxfordFiocruz, qtdJanssen, qtdCoronavacButantan)
+    console.log(labels.length, qtdPfizer.length, qtdOxfordFiocruz.length, qtdJanssen.length, qtdCoronavacButantan.length)
+
+    let obj: any = {
+        VacName: '',
+        VacSended: 0
+    }
+
+    VacSended.forEach(item => {
+        
+        if(obj.VacName !== item.period) {
+            obj = {
+                VacName: item.period
+                // VacSended: item.
+            }
+        }
+    })
+
+
 
     const data = {
         labels: labels,
@@ -34,14 +52,14 @@ export const getSendChart = (VacSended: VacsSendResumeType[]) => {
                 data: qtdPfizer,
                 borderColer: colorsRandomRGB,
                 backgroundColot: transparentize(colorsRandomRGB, 0.5),
-                yAxisID: 'y'
+                yAxisID: 'y' 
             },
             {
                 label: 'janssen',
                 data: qtdJanssen,
                 borderColer: colorsRandomRGB,
                 backgroundColot: transparentize(colorsRandomRGB, 0.5),
-                yAxisID:  'y'
+                yAxisID:  'y' 
             }
         ]
     }

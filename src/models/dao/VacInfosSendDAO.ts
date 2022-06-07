@@ -120,7 +120,7 @@ export const getVacsSendStatistic = (): VacsSendResumeType[]  => {
     })
 
     //console.log(vacsSend)
-    // console.log(vacsSendResume)
+    console.log(vacsSendResume)
    
 
     return vacsSendResume
